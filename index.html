@@ -119,7 +119,7 @@
       username = 'default_user';
 
       const oldData = loadProgress();
-      if (oldData && confirm("Đã tìm thấy bài cũ. Bạn có muốn tiếp tục?")) {
+      if (oldData && confirm("We found your previous work. Do you want to continue?")) {
         selectedAnswers = oldData.selectedAnswers || {};
         currentPage = oldData.currentPage || 0;
       } else {
@@ -228,7 +228,7 @@
       const resultContainer = document.getElementById('result-screen');
       resultContainer.style.display = 'block';
       document.getElementById('quiz-screen').style.display = 'none';
-      resultContainer.innerHTML = `<h3>Bạn đã trả lời đúng ${score} / ${quizData.length} câu.</h3>`;
+      resultContainer.innerHTML = `<h3>You have correctly answered ${score} / ${quizData.length} questions.</h3>`;
 
       // Lưu kết quả cuối cùng
       const prev = JSON.parse(localStorage.getItem('quizResults') || '[]');
@@ -352,7 +352,7 @@
   window.onload = function () {
     const data = localStorage.getItem('quizUserData_default_user');
     if (data) {
-      if (confirm("Bạn đang có một bài làm dở. Tiếp tục không?")) {
+      if (confirm("You have an unfinished quiz. Do you want to continue?")) {
         username = 'default_user';
         const saved = JSON.parse(data);
         selectedAnswers = saved.selectedAnswers || {};
