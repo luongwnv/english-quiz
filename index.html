@@ -3,8 +3,41 @@
 
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>English Quiz</title>
   <style>
+    @media (max-width: 600px) {
+      body {
+        padding: 10px;
+      }
+
+      .quiz-container {
+        padding: 15px;
+        box-shadow: none;
+      }
+
+      .question-text {
+        font-size: 16px;
+      }
+
+      .option-btn {
+        font-size: 14px;
+        padding: 10px;
+      }
+
+      button {
+        font-size: 14px;
+        padding: 8px 12px;
+        margin-bottom: 10px;
+      }
+
+      .nav-buttons {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+    }
+
     body {
       font-family: sans-serif;
       background-color: #f7f7f7;
@@ -142,9 +175,10 @@
         if (value === q.answer) correctSoFar++;
       });
       pageInfo.innerHTML = `
-        Page <span style="color: #007bff; font-weight: bold;">${currentPage + 1}</span> / ${Math.ceil(quizData.length / pageSize)}
-        — Temporary correct answers: <span style="color: #28a745; font-weight: bold;">${correctSoFar}</span>
+        Page <span style="color: #007bff; font-weight: bold;">${currentPage + 1}</span> / ${Math.ceil(quizData.length / pageSize)}<br>
+        Temporary correct answers: <span style="color: #28a745; font-weight: bold;">${correctSoFar}</span>
       `;
+
 
 
       const start = currentPage * pageSize;
@@ -210,12 +244,14 @@
       currentPage++;
       saveProgress();
       renderPage();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     function prevPage() {
       currentPage--;
       saveProgress();
       renderPage();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     function submitQuiz() {
