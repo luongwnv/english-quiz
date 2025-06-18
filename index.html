@@ -1,0 +1,2834 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>English Quiz</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            padding: 20px;
+            background-color: #f7f7f7;
+        }
+
+        .question-block {
+            background: white;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .question-text {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .option-btn {
+            display: block;
+            margin: 5px 0;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            cursor: pointer;
+            background: #fff;
+        }
+
+        .option-btn.correct {
+            background-color: #d4edda;
+            color: #155724;
+            border-color: #c3e6cb;
+        }
+
+        .option-btn.incorrect {
+            background-color: #f8d7da;
+            color: #721c24;
+            border-color: #f5c6cb;
+        }
+
+        .reset-btn {
+            margin-top: 10px;
+            padding: 6px 12px;
+            border: none;
+            background: #007bff;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>English Quiz</h1>
+    <div id="quiz-container"></div>
+
+    <script>
+        const quizData = [
+            {
+                "question": "My name's Trinh. I'm 20 ………",
+                "option_a": "years",
+                "option_b": "old years",
+                "option_c": "year old",
+                "option_d": "years old",
+                "answer": "D"
+            },
+            {
+                "question": "My college …… Ho Chi Minh city.",
+                "option_a": "are at",
+                "option_b": "are in",
+                "option_c": "is in",
+                "option_d": "is at",
+                "answer": "C"
+            },
+            {
+                "question": "This is a photo of …… and my two sisters.",
+                "option_a": "mine",
+                "option_b": "me",
+                "option_c": "I",
+                "option_d": "my",
+                "answer": "B"
+            },
+            {
+                "question": "We …… at the same college",
+                "option_a": "are",
+                "option_b": "is",
+                "option_c": "was",
+                "option_d": "were",
+                "answer": "A"
+            },
+            {
+                "question": "…… your parents at home tonight?",
+                "option_a": "are",
+                "option_b": "is",
+                "option_c": "do",
+                "option_d": "be",
+                "answer": "A"
+            },
+            {
+                "question": ". …… your house near here, John?",
+                "option_a": "do",
+                "option_b": "does",
+                "option_c": "is",
+                "option_d": "are",
+                "answer": "C"
+            },
+            {
+                "question": ". He is married and has two ……",
+                "option_a": "childs",
+                "option_b": "child",
+                "option_c": "childrens",
+                "option_d": "children",
+                "answer": "D"
+            },
+            {
+                "question": "His wife, Marry, is .… She is from New York.",
+                "option_a": "Australia",
+                "option_b": "Canada",
+                "option_c": "American",
+                "option_d": "Spain",
+                "answer": "C"
+            },
+            {
+                "question": ". Her family is still in Boston, but she now ….. France.",
+                "option_a": "works in",
+                "option_b": "work in",
+                "option_c": "works at",
+                "option_d": "works on",
+                "answer": "A"
+            },
+            {
+                "question": ". They speak English, French and ……",
+                "option_a": "Viet Namese",
+                "option_b": "Vietnams",
+                "option_c": "Vietnamese",
+                "option_d": "Viet Nam",
+                "answer": "C"
+            },
+            {
+                "question": ". Their children are pupils at a local primary ……",
+                "option_a": "college",
+                "option_b": "school",
+                "option_c": "vocational school",
+                "option_d": "university",
+                "answer": "B"
+            },
+            {
+                "question": ". The children go to school with …… from all over the world.",
+                "option_a": "other one",
+                "option_b": "other ones",
+                "option_c": "one other",
+                "option_d": "other",
+                "answer": "B"
+            },
+            {
+                "question": ". Their son …… to school with students from Spain, Canada.",
+                "option_a": "went",
+                "option_b": "going",
+                "option_c": "go",
+                "option_d": "goes",
+                "answer": "D"
+            },
+            {
+                "question": ". Where …… his wife come from?",
+                "option_a": "does",
+                "option_b": "do",
+                "option_c": "is",
+                "option_d": "was",
+                "answer": "A"
+            },
+            {
+                "question": ". Where is …… family?",
+                "option_a": "the Jane",
+                "option_b": "Jane's",
+                "option_c": "Jane is",
+                "option_d": "Jane",
+                "answer": "B"
+            },
+            {
+                "question": "How many languages …… his family speak?",
+                "option_a": "were",
+                "option_b": "are",
+                "option_c": "do",
+                "option_d": "does",
+                "answer": "D"
+            },
+            {
+                "question": "What …… the children's names? They are Thanh and Nam.",
+                "option_a": "is",
+                "option_b": "do",
+                "option_c": "are",
+                "option_d": "does",
+                "answer": "C"
+            },
+            {
+                "question": ". There are many children from different …… at the school.",
+                "option_a": "country",
+                "option_b": "countries",
+                "option_c": "the country",
+                "option_d": "countryes",
+                "answer": "B"
+            },
+            {
+                "question": ". There are …… from Australia at the school.",
+                "option_a": "childrenese",
+                "option_b": "children",
+                "option_c": "the children",
+                "option_d": "childs",
+                "answer": "B"
+            },
+            {
+                "question": ". My brother …… English at TAS language center.",
+                "option_a": "studies",
+                "option_b": "study to",
+                "option_c": "to study",
+                "option_d": "study",
+                "answer": "A"
+            },
+            {
+                "question": ". My aunt lives in a big house in …… country.",
+                "option_a": "a",
+                "option_b": "an",
+                "option_c": "the",
+                "option_d": "some",
+                "answer": "C"
+            },
+            {
+                "question": ". I …… school by bike at the weekends.",
+                "option_a": "go to",
+                "option_b": "go",
+                "option_c": "went",
+                "option_d": "runs",
+                "answer": "A"
+            },
+            {
+                "question": ". My uncle …… for a small company.",
+                "option_a": "worked",
+                "option_b": "works",
+                "option_c": "to work",
+                "option_d": "working",
+                "answer": "B"
+            },
+            {
+                "question": ". My lovely family …… four members.",
+                "option_a": "there is",
+                "option_b": "there are",
+                "option_c": "have",
+                "option_d": "has",
+                "answer": "D"
+            },
+            {
+                "question": ". My father usually …… badminton every morning.",
+                "option_a": "is played",
+                "option_b": "playing",
+                "option_c": "plays",
+                "option_d": "play",
+                "answer": "C"
+            },
+            {
+                "question": ". My friends do …… every night.",
+                "option_a": "home works",
+                "option_b": "the homeworks",
+                "option_c": "homework",
+                "option_d": "homeworks",
+                "answer": "C"
+            },
+            {
+                "question": ". …… you speak English all the time? Yes, I do.",
+                "option_a": "will",
+                "option_b": "can",
+                "option_c": "have",
+                "option_d": "do",
+                "answer": "D"
+            },
+            {
+                "question": ". Does Cristiano Ronaldo play football well? Yes, he\n………\n-",
+                "option_a": "is",
+                "option_b": "can",
+                "option_c": "does",
+                "option_d": "plays",
+                "answer": "C"
+            },
+            {
+                "question": ". Do you go to school …… Sunday?",
+                "option_a": "for",
+                "option_b": "in",
+                "option_c": "on",
+                "option_d": "at",
+                "answer": "C"
+            },
+            {
+                "question": ". Do your friends go out …… weekends?",
+                "option_a": "at",
+                "option_b": "about",
+                "option_c": "from",
+                "option_d": "through",
+                "answer": "A"
+            },
+            {
+                "question": ". Do you really want …… watch TV tonight?",
+                "option_a": "too",
+                "option_b": "to",
+                "option_c": "two",
+                "option_d": "through",
+                "answer": "B"
+            },
+            {
+                "question": "…… your brother like to play football? Yes, he does.",
+                "option_a": "can",
+                "option_b": "does",
+                "option_c": "do",
+                "option_d": "will",
+                "answer": "B"
+            },
+            {
+                "question": ". They always …… hours in the music shops.",
+                "option_a": "spending",
+                "option_b": "spends",
+                "option_c": "to spend",
+                "option_d": "spend",
+                "answer": "D"
+            },
+            {
+                "question": ". What sport do you like to play in …… free time?",
+                "option_a": "her",
+                "option_b": "his",
+                "option_c": "my",
+                "option_d": "your",
+                "answer": "D"
+            },
+            {
+                "question": ". I always …… judo on Sunday morning.",
+                "option_a": "play",
+                "option_b": "go",
+                "option_c": "do",
+                "option_d": "does",
+                "answer": "C"
+            },
+            {
+                "question": ". I usually …… up early and play chess with my brother.",
+                "option_a": "get",
+                "option_b": "gets",
+                "option_c": "got",
+                "option_d": "getting",
+                "answer": "A"
+            },
+            {
+                "question": ". Judo and chess …… always fun.",
+                "option_a": "are",
+                "option_b": "is",
+                "option_c": "be",
+                "option_d": "was",
+                "answer": "A"
+            },
+            {
+                "question": ". After that, I go …… the park with my friends.",
+                "option_a": "far",
+                "option_b": "to",
+                "option_c": "under",
+                "option_d": "with",
+                "answer": "B"
+            },
+            {
+                "question": ". In the afternoon, I usually watch football, but sometimes I do my ……",
+                "option_a": "homeworking",
+                "option_b": "homeworkes",
+                "option_c": "homeworks",
+                "option_d": "homework",
+                "answer": "D"
+            },
+            {
+                "question": "…… the evening, I hardly ever stay home.",
+                "option_a": "between",
+                "option_b": "on",
+                "option_c": "in",
+                "option_d": "with",
+                "answer": "C"
+            },
+            {
+                "question": ". I usually go to the gym and …… yoga with my friends.",
+                "option_a": "play",
+                "option_b": "go",
+                "option_c": "do",
+                "option_d": "does",
+                "answer": "C"
+            },
+            {
+                "question": ". Do you like …… play football with your friends?",
+                "option_a": "two",
+                "option_b": "to",
+                "option_c": "too",
+                "option_d": "at",
+                "answer": "B"
+            },
+            {
+                "question": ". Can you …… judo well?",
+                "option_a": "does",
+                "option_b": "go",
+                "option_c": "play",
+                "option_d": "do",
+                "answer": "D"
+            },
+            {
+                "question": ". Do you like to study …… ?",
+                "option_a": "hard",
+                "option_b": "hardly",
+                "option_c": "be hard",
+                "option_d": "the hard",
+                "answer": "A"
+            },
+            {
+                "question": ". Mai usually …… up early on Saturdays to go shopping with her mum.",
+                "option_a": "gets",
+                "option_b": "get",
+                "option_c": "to get",
+                "option_d": "got",
+                "answer": "A"
+            },
+            {
+                "question": ". They …… the shopping for the whole week at a big shopping centre nearby.",
+                "option_a": "done",
+                "option_b": "did",
+                "option_c": "does",
+                "option_d": "do",
+                "answer": "D"
+            },
+            {
+                "question": ". She …… for new music in the shops there.",
+                "option_a": "likes to looking",
+                "option_b": "liking looking",
+                "option_c": "likes looking",
+                "option_d": "like looking",
+                "answer": "C"
+            },
+            {
+                "question": ". Mai is a hip-hop …… and her mum likes country music.",
+                "option_a": "class",
+                "option_b": "club",
+                "option_c": "fan",
+                "option_d": "thing",
+                "answer": "C"
+            },
+            {
+                "question": ". After lunch, she does some homework and …… an hour in front of her computer.",
+                "option_a": "spend",
+                "option_b": "spends",
+                "option_c": "to spends",
+                "option_d": "spend to",
+                "answer": "B"
+            },
+            {
+                "question": ". She meets her friends …… a week.",
+                "option_a": "wants",
+                "option_b": "one",
+                "option_c": "to once",
+                "option_d": "once",
+                "answer": "D"
+            },
+            {
+                "question": ". They go to the youth club, and talk about music and football and …… games.",
+                "option_a": "does",
+                "option_b": "plays",
+                "option_c": "play",
+                "option_d": "do",
+                "answer": "C"
+            },
+            {
+                "question": ". What kind of music …… Mai like?",
+                "option_a": "does",
+                "option_b": "do",
+                "option_c": "was",
+                "option_d": "will",
+                "answer": "A"
+            },
+            {
+                "question": ". Hoa’s family usually …… to their second house in the country.",
+                "option_a": "going",
+                "option_b": "goes",
+                "option_c": "to go",
+                "option_d": "go to",
+                "answer": "B"
+            },
+            {
+                "question": ". So she always …… early at the weekends.",
+                "option_a": "gets up",
+                "option_b": "get up",
+                "option_c": "to get up",
+                "option_d": "up get",
+                "answer": "A"
+            },
+            {
+                "question": ". This house is in a small …… about an hour away from where she lives in Ho Chi Minh city.",
+                "option_a": "club",
+                "option_b": "class",
+                "option_c": "village",
+                "option_d": "one",
+                "answer": "C"
+            },
+            {
+                "question": ". Her grandmother and some uncles and aunts …… in the same place.",
+                "option_a": "living",
+                "option_b": "live to",
+                "option_c": "to live",
+                "option_d": "live",
+                "answer": "D"
+            },
+            {
+                "question": ". They’ve got a big garden and a tennis …… so she can play tennis.",
+                "option_a": "cold",
+                "option_b": "coach",
+                "option_c": "cost",
+                "option_d": "court",
+                "answer": "D"
+            },
+            {
+                "question": ". On other Saturdays she gets up late …… a bit of homework.",
+                "option_a": "does",
+                "option_b": "do",
+                "option_c": "to does",
+                "option_d": "to do",
+                "answer": "D"
+            },
+            {
+                "question": ". She is really a big football …… and some of her best friends are football fans too.",
+                "option_a": "fence",
+                "option_b": "fan",
+                "option_c": "fall",
+                "option_d": "fail",
+                "answer": "B"
+            },
+            {
+                "question": ". Thanh’s grandmother …… a big garden.",
+                "option_a": "to have",
+                "option_b": "having",
+                "option_c": "has",
+                "option_d": "have",
+                "answer": "C"
+            },
+            {
+                "question": ". Loan usually …… tennis with her uncles and aunts",
+                "option_a": "play to",
+                "option_b": "to play",
+                "option_c": "plays",
+                "option_d": "play",
+                "answer": "C"
+            },
+            {
+                "question": ". Hoa and her friends really …… football.",
+                "option_a": "to enjoy",
+                "option_b": "enjoy",
+                "option_c": "enjoys",
+                "option_d": "enjoyes",
+                "answer": "B"
+            },
+            {
+                "question": "What do you do with your friends in …… free time?",
+                "option_a": "your",
+                "option_b": "my",
+                "option_c": "his",
+                "option_d": "her",
+                "answer": "A"
+            },
+            {
+                "question": ". When do you spend time with ……",
+                "option_a": "my family",
+                "option_b": "your family",
+                "option_c": "family yours",
+                "option_d": "to your family",
+                "answer": "B"
+            },
+            {
+                "question": ". I prefer …… time with my family at weekends.",
+                "option_a": "to spend",
+                "option_b": "spend",
+                "option_c": "spent",
+                "option_d": "too spend",
+                "answer": "A"
+            },
+            {
+                "question": "Peter is three years old. He can draw well, but he\n…… write",
+                "option_a": "not can",
+                "option_b": "can no",
+                "option_c": "can not",
+                "option_d": "cannot",
+                "answer": "D"
+            },
+            {
+                "question": ". Mary loves music and she can sing …… songs.",
+                "option_a": "an",
+                "option_b": "a",
+                "option_c": "much",
+                "option_d": "many",
+                "answer": "D"
+            },
+            {
+                "question": ".\nHe never …… to the bar, because he can’t dance.",
+                "option_a": "go",
+                "option_b": "to goes",
+                "option_c": "goes",
+                "option_d": "went",
+                "answer": "C"
+            },
+            {
+                "question": ". Tom …… car, but he can’t drive it.",
+                "option_a": "has an",
+                "option_b": "have a",
+                "option_c": "has a",
+                "option_d": "has",
+                "answer": "C"
+            },
+            {
+                "question": ". My brother is really interested …… football. He can play football very well.",
+                "option_a": "in",
+                "option_b": "with",
+                "option_c": "at",
+                "option_d": "about",
+                "answer": "A"
+            },
+            {
+                "question": ". Harry …… English, but he can’t speak Spanish.",
+                "option_a": "can speak",
+                "option_b": "can speaks",
+                "option_c": "cans speak",
+                "option_d": "can speaking",
+                "answer": "A"
+            },
+            {
+                "question": ". Lan usually goes to the gym because she yoga.",
+                "option_a": "can does",
+                "option_b": "can do",
+                "option_c": "cans play",
+                "option_d": "can",
+                "answer": "B"
+            },
+            {
+                "question": ". Everyday Lan goes to school …… foot.",
+                "option_a": "has",
+                "option_b": "with",
+                "option_c": "on",
+                "option_d": "by",
+                "answer": "C"
+            },
+            {
+                "question": ". There …… twenty-five students in this class.",
+                "option_a": "has",
+                "option_b": "have",
+                "option_c": "are",
+                "option_d": "is",
+                "answer": "C"
+            },
+            {
+                "question": ". There …… a basket near the main door.",
+                "option_a": "have",
+                "option_b": "is",
+                "option_c": "are",
+                "option_d": "were",
+                "answer": "B"
+            },
+            {
+                "question": ". There is …… old library in our school.",
+                "option_a": "an",
+                "option_b": "a",
+                "option_c": "any",
+                "option_d": "some",
+                "answer": "A"
+            },
+            {
+                "question": ". There are …… new pens in my bag.",
+                "option_a": "one",
+                "option_b": "three",
+                "option_c": "there",
+                "option_d": "an",
+                "answer": "B"
+            },
+            {
+                "question": ". There is a chair near the teacher…… desk.",
+                "option_a": "es",
+                "option_b": "s",
+                "option_c": "’s",
+                "option_d": "of",
+                "answer": "C"
+            },
+            {
+                "question": ". There’s an old …… on the old wall.",
+                "option_a": "air",
+                "option_b": "sky",
+                "option_c": "water",
+                "option_d": "picture",
+                "answer": "D"
+            },
+            {
+                "question": ". Is there …… dictionary on your table?",
+                "option_a": "any",
+                "option_b": "an",
+                "option_c": "some",
+                "option_d": "two",
+                "answer": "A"
+            },
+            {
+                "question": ". There are …… plants near the window.",
+                "option_a": "an",
+                "option_b": "a",
+                "option_c": "any",
+                "option_d": "some",
+                "answer": "D"
+            },
+            {
+                "question": ". …… there any eggs in the fridge?",
+                "option_a": "Do",
+                "option_b": "Was",
+                "option_c": "Are",
+                "option_d": "Is",
+                "answer": "C"
+            },
+            {
+                "question": ". There …… whiteboard in our classroom.",
+                "option_a": "isn’t any",
+                "option_b": "aren’t any",
+                "option_c": "isn’t some",
+                "option_d": "wasn’t any",
+                "answer": "A"
+            },
+            {
+                "question": ". There aren’t any …… in the garden.",
+                "option_a": "flowerss",
+                "option_b": "flowers",
+                "option_c": "flower",
+                "option_d": "floweres",
+                "answer": "B"
+            },
+            {
+                "question": ". There is……… old umbrella near the main door.",
+                "option_a": "a",
+                "option_b": "an",
+                "option_c": "some",
+                "option_d": "any",
+                "answer": "B"
+            },
+            {
+                "question": ". The TV is between the dog…… the cat.",
+                "option_a": "at",
+                "option_b": "by",
+                "option_c": "and",
+                "option_d": "with",
+                "answer": "C"
+            },
+            {
+                "question": ". Where can you …… out with your friends?",
+                "option_a": "goes",
+                "option_b": "go",
+                "option_c": "to go",
+                "option_d": "going",
+                "answer": "B"
+            },
+            {
+                "question": ". Where…… Binh Duong post office?",
+                "option_a": "are",
+                "option_b": "is",
+                "option_c": "do",
+                "option_d": "does",
+                "answer": "B"
+            },
+            {
+                "question": ". Is there a filling station near here? Yes, there ……",
+                "option_a": "are",
+                "option_b": "be",
+                "option_c": "is",
+                "option_d": "was",
+                "answer": "C"
+            },
+            {
+                "question": ". How get to Sai Gon post office? You can\nget there by taxi.\n-",
+                "option_a": "can I",
+                "option_b": "can he",
+                "option_c": "I can",
+                "option_d": "can they",
+                "answer": "A"
+            },
+            {
+                "question": ". Do you know where …… ?",
+                "option_a": "the post office were",
+                "option_b": "is the post office",
+                "option_c": "were the post office",
+                "option_d": "the post office is",
+                "answer": "D"
+            },
+            {
+                "question": ". Do you want …… visit Da Nang city for the weekend?",
+                "option_a": "for",
+                "option_b": "to",
+                "option_c": "two",
+                "option_d": "a",
+                "answer": "B"
+            },
+            {
+                "question": ". There are …… interesting places like Dragon Bridge, My Khe Beach.",
+                "option_a": "a lot of",
+                "option_b": "a lot",
+                "option_c": "of lot",
+                "option_d": "lot",
+                "answer": "A"
+            },
+            {
+                "question": "It is fantastic to look …… Dragon Bridge at night.",
+                "option_a": "at",
+                "option_b": "of",
+                "option_c": "for",
+                "option_d": "through",
+                "answer": "A"
+            },
+            {
+                "question": "you like to go shopping? Yes, I do.",
+                "option_a": "are",
+                "option_b": "does",
+                "option_c": "do",
+                "option_d": "was",
+                "answer": "C"
+            },
+            {
+                "question": ". There …… a lot of department stores and supermarkets in Da Nang city.",
+                "option_a": "is",
+                "option_b": "was",
+                "option_c": "are",
+                "option_d": "has",
+                "answer": "C"
+            },
+            {
+                "question": ". There are also …… shopping centres.",
+                "option_a": "some",
+                "option_b": "a",
+                "option_c": "an",
+                "option_d": "any",
+                "answer": "A"
+            },
+            {
+                "question": ". There are some golf …… and tennis courts. So you can play golf and tennis.",
+                "option_a": "coursing",
+                "option_b": "coursess",
+                "option_c": "courses",
+                "option_d": "course",
+                "answer": "C"
+            },
+            {
+                "question": ". You can …… a bike or walk around the streets to look at the city.",
+                "option_a": "to ride",
+                "option_b": "ride",
+                "option_c": "to drive",
+                "option_d": "drive",
+                "answer": "B"
+            },
+            {
+                "question": ". You can …… fresh seafood in Da Nang city.",
+                "option_a": "enjoys",
+                "option_b": "enjoying",
+                "option_c": "to enjoy",
+                "option_d": "enjoy",
+                "answer": "D"
+            },
+            {
+                "question": ". There are a lot restaurants here. The food is\ngood and the service is good too.\n-",
+                "option_a": "that",
+                "option_b": "up",
+                "option_c": "off",
+                "option_d": "of",
+                "answer": "D"
+            },
+            {
+                "question": ". There are also some …… coffee shops at night.",
+                "option_a": "nices",
+                "option_b": "nice",
+                "option_c": "naive",
+                "option_d": "niece",
+                "answer": "B"
+            },
+            {
+                "question": ". People in Da Nang city …… honest and friendly.",
+                "option_a": "was",
+                "option_b": "be",
+                "option_c": "are",
+                "option_d": "is",
+                "answer": "C"
+            },
+            {
+                "question": ". They are willing …… help other people.",
+                "option_a": "for",
+                "option_b": "to",
+                "option_c": "too",
+                "option_d": "two",
+                "answer": "B"
+            },
+            {
+                "question": "tourists like the people here.",
+                "option_a": "lot",
+                "option_b": "are",
+                "option_c": "many",
+                "option_d": "much",
+                "answer": "C"
+            },
+            {
+                "question": ". What …… some interesting places in Da Nang city?",
+                "option_a": "are",
+                "option_b": "is",
+                "option_c": "do",
+                "option_d": "was",
+                "answer": "A"
+            },
+            {
+                "question": ". Where can you …… shopping in Da Nang city?",
+                "option_a": "goes",
+                "option_b": "to go",
+                "option_c": "going",
+                "option_d": "go",
+                "answer": "D"
+            },
+            {
+                "question": ". Where can he …… golf and tennis in Da Nang city?",
+                "option_a": "play",
+                "option_b": "playing",
+                "option_c": "to play",
+                "option_d": "plays",
+                "answer": "A"
+            },
+            {
+                "question": ". How …… the food in Da Nang city?",
+                "option_a": "was",
+                "option_b": "be",
+                "option_c": "is",
+                "option_d": "are",
+                "answer": "C"
+            },
+            {
+                "question": ". Why …… many tourists like the people in Da Nang city?",
+                "option_a": "is",
+                "option_b": "do",
+                "option_c": "does",
+                "option_d": "are",
+                "answer": "B"
+            },
+            {
+                "question": ". …… you want to visit Da Nang city? Yes, I do.",
+                "option_a": "were",
+                "option_b": "does",
+                "option_c": "do",
+                "option_d": "are",
+                "answer": "C"
+            },
+            {
+                "question": ". Excuse me, do you know where the ……",
+                "option_a": "is cinema",
+                "option_b": "cinema are",
+                "option_c": "cinema is",
+                "option_d": "cinema",
+                "answer": "C"
+            },
+            {
+                "question": ". The market is …… your left hand. Thanks very much.",
+                "option_a": "on",
+                "option_b": "with",
+                "option_c": "at",
+                "option_d": "in",
+                "answer": "A"
+            },
+            {
+                "question": ". What kind ……… food do you like to enjoy?",
+                "option_a": "the",
+                "option_b": "an",
+                "option_c": "of",
+                "option_d": "a",
+                "answer": "C"
+            },
+            {
+                "question": ". Do you like to eat out or eat …… home?",
+                "option_a": "for",
+                "option_b": "on",
+                "option_c": "in",
+                "option_d": "at",
+                "answer": "D"
+            },
+            {
+                "question": ". What kind of food and drink…… you like?",
+                "option_a": "is",
+                "option_b": "do",
+                "option_c": "does",
+                "option_d": "are",
+                "answer": "B"
+            },
+            {
+                "question": ". How much butter …… there in the bottle?",
+                "option_a": "were",
+                "option_b": "is",
+                "option_c": "was",
+                "option_d": "are",
+                "answer": "B"
+            },
+            {
+                "question": ". …… tomatoes are there in the fridge?",
+                "option_a": "how far",
+                "option_b": "how is",
+                "option_c": "how much",
+                "option_d": "how many",
+                "answer": "D"
+            },
+            {
+                "question": ". How much …… do you need for a cup of coffee?",
+                "option_a": "a sugar",
+                "option_b": "sugar",
+                "option_c": "sugars",
+                "option_d": "the sugar",
+                "answer": "B"
+            },
+            {
+                "question": ". How …… people are there in your family?",
+                "option_a": "many",
+                "option_b": "much",
+                "option_c": "do",
+                "option_d": "are",
+                "answer": "A"
+            },
+            {
+                "question": ". How …… do you see in the class?",
+                "option_a": "many tables",
+                "option_b": "much tables",
+                "option_c": "many table",
+                "option_d": "many of the table",
+                "answer": "A"
+            },
+            {
+                "question": "How much money …… you spend a week?",
+                "option_a": "were",
+                "option_b": "was",
+                "option_c": "do",
+                "option_d": "are",
+                "answer": "C"
+            },
+            {
+                "question": ". How many tomatoes …… put in the fridge?",
+                "option_a": "you",
+                "option_b": "you do",
+                "option_c": "do you",
+                "option_d": "does you",
+                "answer": "C"
+            },
+            {
+                "question": ". How much water …… in the bottle?",
+                "option_a": "do there",
+                "option_b": "is there",
+                "option_c": "are there",
+                "option_d": "does there",
+                "answer": "B"
+            },
+            {
+                "question": ". How much butter is …… in the jar?",
+                "option_a": "does",
+                "option_b": "he",
+                "option_c": "that",
+                "option_d": "there",
+                "answer": "D"
+            },
+            {
+                "question": ". How many lights are there in …… living room?",
+                "option_a": "your",
+                "option_b": "yours",
+                "option_c": "the your",
+                "option_d": "you",
+                "answer": "A"
+            },
+            {
+                "question": ". I……… hungry. I’d like a sandwich, please!",
+                "option_a": "m",
+                "option_b": "am",
+                "option_c": "will",
+                "option_d": "is",
+                "answer": "B"
+            },
+            {
+                "question": ". We have a lot …… today.",
+                "option_a": "of homeworks",
+                "option_b": "of homework",
+                "option_c": "homework of",
+                "option_d": "homeworks",
+                "answer": "B"
+            },
+            {
+                "question": ". You can …… salad in this famous restaurant.",
+                "option_a": "go",
+                "option_b": "run",
+                "option_c": "eat",
+                "option_d": "sleep",
+                "answer": "C"
+            },
+            {
+                "question": ". This restaurant …… fresh seafood every day.",
+                "option_a": "sold",
+                "option_b": "sells",
+                "option_c": "selling",
+                "option_d": "a sell",
+                "answer": "B"
+            },
+            {
+                "question": ". There are three different types …… cake.",
+                "option_a": "an",
+                "option_b": "a",
+                "option_c": "off",
+                "option_d": "of",
+                "answer": "D"
+            },
+            {
+                "question": ". They …… have desserts in this restaurant at all.",
+                "option_a": "don’t",
+                "option_b": "doesn’t",
+                "option_c": "aren’t",
+                "option_d": "no",
+                "answer": "A"
+            },
+            {
+                "question": ". The water…… in this restaurant.",
+                "option_a": "no free",
+                "option_b": "are free",
+                "option_c": "is free",
+                "option_d": "free",
+                "answer": "C"
+            },
+            {
+                "question": ". What …… you eating now John?",
+                "option_a": "do",
+                "option_b": "are",
+                "option_c": "is",
+                "option_d": "be",
+                "answer": "B"
+            },
+            {
+                "question": ". I …… fried chicken with some potato chips.",
+                "option_a": "eatings",
+                "option_b": "eating",
+                "option_c": "are eating",
+                "option_d": "am eating",
+                "answer": "D"
+            },
+            {
+                "question": ". You shouldn’t …… much fast food. It’s really bad for your health.",
+                "option_a": "to eat too",
+                "option_b": "eat too",
+                "option_c": "to eat",
+                "option_d": "eating",
+                "answer": "B"
+            },
+            {
+                "question": ". You shouldn’t drink …… drink too much. It makes you gain weight.",
+                "option_a": "a",
+                "option_b": "soft",
+                "option_c": "to",
+                "option_d": "for",
+                "answer": "B"
+            },
+            {
+                "question": ". You should …… more mineral water. Orange juice is also quite good.",
+                "option_a": "drink to",
+                "option_b": "to drink",
+                "option_c": "drink",
+                "option_d": "drinks",
+                "answer": "C"
+            },
+            {
+                "question": ". John is thirsty now. So he should find something to\n……\n-",
+                "option_a": "sleep",
+                "option_b": "drink",
+                "option_c": "eat",
+                "option_d": "smell",
+                "answer": "B"
+            },
+            {
+                "question": ". I …… do this exercise therefor I should ask Peter for help.",
+                "option_a": "can’t",
+                "option_b": "can not",
+                "option_c": "not can",
+                "option_d": "can no",
+                "answer": "A"
+            },
+            {
+                "question": ". John should study …… because John failed his first exam.",
+                "option_a": "the harder",
+                "option_b": "more harder",
+                "option_c": "harder",
+                "option_d": "hards",
+                "answer": "C"
+            },
+            {
+                "question": ". There are some good …… in my class.",
+                "option_a": "the student",
+                "option_b": "a students",
+                "option_c": "student",
+                "option_d": "students",
+                "answer": "D"
+            },
+            {
+                "question": "There are …… schools in my lovely hometown.",
+                "option_a": "many",
+                "option_b": "much",
+                "option_c": "a lot",
+                "option_d": "so",
+                "answer": "A"
+            },
+            {
+                "question": ". There are some post …… in my hometown.",
+                "option_a": "the office",
+                "option_b": "officing",
+                "option_c": "offices",
+                "option_d": "office",
+                "answer": "C"
+            },
+            {
+                "question": ". We don’t have any …… for our breakfast.",
+                "option_a": "milks",
+                "option_b": "milk",
+                "option_c": "the milk",
+                "option_d": "a milk",
+                "answer": "B"
+            },
+            {
+                "question": ". I …… want to have any lettuce in my sandwiches.",
+                "option_a": "don’t",
+                "option_b": "doesn’t",
+                "option_c": "am not",
+                "option_d": "so",
+                "answer": "A"
+            },
+            {
+                "question": ". We …… some more flowers in this room.",
+                "option_a": "needing",
+                "option_b": "need",
+                "option_c": "the need",
+                "option_d": "needs",
+                "answer": "B"
+            },
+            {
+                "question": ". Please bring me some …… I am thirsty now.",
+                "option_a": "watering",
+                "option_b": "of water",
+                "option_c": "water",
+                "option_d": "waters",
+                "answer": "C"
+            },
+            {
+                "question": "…… he have any pen with him? Yes, he does.",
+                "option_a": "will",
+                "option_b": "do",
+                "option_c": "does",
+                "option_d": "did",
+                "answer": "C"
+            },
+            {
+                "question": ". There are some …… in the classroom.",
+                "option_a": "big of chair",
+                "option_b": "big chair",
+                "option_c": "chairs big",
+                "option_d": "big chairs",
+                "answer": "D"
+            },
+            {
+                "question": ". I would like to drink …… milk in my breakfast.",
+                "option_a": "any",
+                "option_b": "an",
+                "option_c": "a",
+                "option_d": "some",
+                "answer": "D"
+            },
+            {
+                "question": ". What special occasions …… you like best?",
+                "option_a": "will",
+                "option_b": "does",
+                "option_c": "do",
+                "option_d": "did",
+                "answer": "C"
+            },
+            {
+                "question": ". She …… straight black hair.",
+                "option_a": "has",
+                "option_b": "have",
+                "option_c": "is",
+                "option_d": "was",
+                "answer": "A"
+            },
+            {
+                "question": ". John is watching television …… present.",
+                "option_a": "on",
+                "option_b": "at",
+                "option_c": "in",
+                "option_d": "of",
+                "answer": "B"
+            },
+            {
+                "question": ". His mother …… cooking this Indian curry now.",
+                "option_a": "is",
+                "option_b": "has",
+                "option_c": "be",
+                "option_d": "was",
+                "answer": "A"
+            },
+            {
+                "question": ". His father …… a newspaper in his own room right now.",
+                "option_a": "read",
+                "option_b": "is reading",
+                "option_c": "reads",
+                "option_d": "reading",
+                "answer": "B"
+            },
+            {
+                "question": ". His sister and brother are playing chess …… the moment.",
+                "option_a": "for",
+                "option_b": "on",
+                "option_c": "at",
+                "option_d": "in",
+                "answer": "C"
+            },
+            {
+                "question": "…… wearing white socks right now?",
+                "option_a": "you are",
+                "option_b": "have you",
+                "option_c": "are you",
+                "option_d": "do you",
+                "answer": "C"
+            },
+            {
+                "question": "Are you …… English right now?",
+                "option_a": "learnt",
+                "option_b": "learns",
+                "option_c": "learn",
+                "option_d": "learning",
+                "answer": "D"
+            },
+            {
+                "question": "Is our teacher writing …… the board now?",
+                "option_a": "on",
+                "option_b": "in",
+                "option_c": "under",
+                "option_d": "at",
+                "answer": "A"
+            },
+            {
+                "question": "Is your father working in a factory …… ?",
+                "option_a": "so far",
+                "option_b": "now",
+                "option_c": "yesterday",
+                "option_d": "tomorrow",
+                "answer": "B"
+            },
+            {
+                "question": "I intend …… football on Sunday morning with some friends.",
+                "option_a": "play",
+                "option_b": "to play",
+                "option_c": "playing",
+                "option_d": "plays",
+                "answer": "B"
+            },
+            {
+                "question": "Are you free …… the afternoon?",
+                "option_a": "of",
+                "option_b": "at",
+                "option_c": "in",
+                "option_d": "on",
+                "answer": "C"
+            },
+            {
+                "question": "Wonderful! Let…… swimming. It’s been so hot these days.",
+                "option_a": "goes",
+                "option_b": "went",
+                "option_c": "go",
+                "option_d": "’s g",
+                "answer": "D"
+            },
+            {
+                "question": "I don’t know how ……",
+                "option_a": "swimming",
+                "option_b": "to swam",
+                "option_c": "to swim",
+                "option_d": "swim",
+                "answer": "C"
+            },
+            {
+                "question": "In the United States, Halloween is a great ……",
+                "option_a": "festival",
+                "option_b": "company",
+                "option_c": "classroom",
+                "option_d": "morning",
+                "answer": "A"
+            },
+            {
+                "question": "It …… celebrated on 30th October In the United States.",
+                "option_a": "an",
+                "option_b": "is",
+                "option_c": "does",
+                "option_d": "was",
+                "answer": "B"
+            },
+            {
+                "question": "Restaurants and clubs …… special events.",
+                "option_a": "holding",
+                "option_b": "holds",
+                "option_c": "a hold",
+                "option_d": "hold",
+                "answer": "D"
+            },
+            {
+                "question": "People also invite live bands …… play.",
+                "option_a": "to",
+                "option_b": "for",
+                "option_c": "the",
+                "option_d": "a",
+                "answer": "A"
+            },
+            {
+                "question": "Children often …… door to door and shout “trick or treat”.",
+                "option_a": "go",
+                "option_b": "goes",
+                "option_c": "going",
+                "option_d": "went",
+                "answer": "A"
+            },
+            {
+                "question": "They visit …… neighbors and ask for sweets and chocolates.",
+                "option_a": "its",
+                "option_b": "their",
+                "option_c": "his",
+                "option_d": "her",
+                "answer": "B"
+            },
+            {
+                "question": "They also …… Halloween lanterns with candles.",
+                "option_a": "makes",
+                "option_b": "make",
+                "option_c": "making",
+                "option_d": "made",
+                "answer": "B"
+            },
+            {
+                "question": "They like …… traditional games.",
+                "option_a": "plays",
+                "option_b": "play to",
+                "option_c": "to play",
+                "option_d": "play",
+                "answer": "C"
+            },
+            {
+                "question": "What …… you usually do with your family on holidays?",
+                "option_a": "were",
+                "option_b": "are",
+                "option_c": "does",
+                "option_d": "do",
+                "answer": "D"
+            },
+            {
+                "question": "Do you like …… sightseeing when you go on vacation?",
+                "option_a": "went",
+                "option_b": "go to",
+                "option_c": "go",
+                "option_d": "to go",
+                "answer": "D"
+            },
+            {
+                "question": "She was in London …… week.",
+                "option_a": "two",
+                "option_b": "the next",
+                "option_c": "last",
+                "option_d": "next",
+                "answer": "C"
+            },
+            {
+                "question": "The children …… in the garden yesterday.",
+                "option_a": "was",
+                "option_b": "were",
+                "option_c": "be",
+                "option_d": "done",
+                "answer": "B"
+            },
+            {
+                "question": "They were at home the day …… yesterday.",
+                "option_a": "before",
+                "option_b": "soon",
+                "option_c": "in",
+                "option_d": "by",
+                "answer": "A"
+            },
+            {
+                "question": "She …… very happy last night because of having lost money.",
+                "option_a": "wasn’t",
+                "option_b": "isn’t",
+                "option_c": "weren’t",
+                "option_d": "not",
+                "answer": "A"
+            },
+            {
+                "question": "We …… at home yesterday.",
+                "option_a": "didn’t",
+                "option_b": "not",
+                "option_c": "weren’t",
+                "option_d": "don’t",
+                "answer": "C"
+            },
+            {
+                "question": "John …… play football last Sunday.",
+                "option_a": "wasn’t",
+                "option_b": "didn’t",
+                "option_c": "doesn’t",
+                "option_d": "do not",
+                "answer": "B"
+            },
+            {
+                "question": "We didn’t …… him at the cinema last night.",
+                "option_a": "to see",
+                "option_b": "seeing",
+                "option_c": "saw",
+                "option_d": "see",
+                "answer": "D"
+            },
+            {
+                "question": "…… she tired of hearing her customer’s complaint yesterday?",
+                "option_a": "were",
+                "option_b": "was",
+                "option_c": "does",
+                "option_d": "is",
+                "answer": "B"
+            },
+            {
+                "question": "…… they at work yesterday? Yes, they were.",
+                "option_a": "were",
+                "option_b": "was",
+                "option_c": "did",
+                "option_d": "do",
+                "answer": "A"
+            },
+            {
+                "question": "…… you visit HaNoi Museum with your class last week? No, I didn’t.",
+                "option_a": "were",
+                "option_b": "are",
+                "option_c": "did",
+                "option_d": "do",
+                "answer": "C"
+            },
+            {
+                "question": "Did she …… the train yesterday? Yes, she did.",
+                "option_a": "missing",
+                "option_b": "missed",
+                "option_c": "miss",
+                "option_d": "to miss",
+                "answer": "C"
+            },
+            {
+                "question": "Where …… you last night, Anne?",
+                "option_a": "were",
+                "option_b": "was",
+                "option_c": "did",
+                "option_d": "are",
+                "answer": "A"
+            },
+            {
+                "question": "Well, I …… at home with my mum last night.",
+                "option_a": "were",
+                "option_b": "was",
+                "option_c": "am",
+                "option_d": "have",
+                "answer": "B"
+            },
+            {
+                "question": "You …… stay at the cinema last night.",
+                "option_a": "weren’t",
+                "option_b": "didn’t",
+                "option_c": "don’t",
+                "option_d": "are not",
+                "answer": "B"
+            },
+            {
+                "question": "I couldn’t go because my mum …… sick the night before last night.",
+                "option_a": "have",
+                "option_b": "were",
+                "option_c": "was",
+                "option_d": "is",
+                "answer": "C"
+            },
+            {
+                "question": "How …… the film? It was fantastic.",
+                "option_a": "does",
+                "option_b": "are",
+                "option_c": "is",
+                "option_d": "was",
+                "answer": "D"
+            },
+            {
+                "question": "It was pretty good, but the ending it …… very happy.",
+                "option_a": "isn’t",
+                "option_b": "weren’t",
+                "option_c": "wasn’t",
+                "option_d": "didn’t",
+                "answer": "C"
+            },
+            {
+                "question": "He could …… when he was five years old.",
+                "option_a": "reading",
+                "option_b": "to read",
+                "option_c": "reads",
+                "option_d": "read",
+                "answer": "D"
+            },
+            {
+                "question": "Mary could play …… piano when he was six years old.",
+                "option_a": "to",
+                "option_b": "the",
+                "option_c": "an",
+                "option_d": "some",
+                "answer": "B"
+            },
+            {
+                "question": "My brother could draw beautiful pictures when he\n…… seven years old.\n-",
+                "option_a": "was",
+                "option_b": "were",
+                "option_c": "is",
+                "option_d": "are",
+                "answer": "A"
+            },
+            {
+                "question": "We could speak two foreign …… when we were eighteen years old.",
+                "option_a": "a languages",
+                "option_b": "the languages",
+                "option_c": "languages",
+                "option_d": "language",
+                "answer": "C"
+            },
+            {
+                "question": "Could you …… when you were one year old?",
+                "option_a": "walking",
+                "option_b": "to walk",
+                "option_c": "walks",
+                "option_d": "walk",
+                "answer": "D"
+            },
+            {
+                "question": "Could you write your name when …… were three years old?",
+                "option_a": "you",
+                "option_b": "Nam",
+                "option_c": "he",
+                "option_d": "she",
+                "answer": "A"
+            },
+            {
+                "question": "Could you count from one …… ten when you were two years old?",
+                "option_a": "for",
+                "option_b": "to",
+                "option_c": "two",
+                "option_d": "too",
+                "answer": "B"
+            },
+            {
+                "question": "Could you …… a bike when you were six years old?",
+                "option_a": "ride",
+                "option_b": "riding",
+                "option_c": "to ride",
+                "option_d": "rides",
+                "answer": "A"
+            },
+            {
+                "question": "…… you have a good vacation four years ago?",
+                "option_a": "are",
+                "option_b": "does",
+                "option_c": "did",
+                "option_d": "do",
+                "answer": "C"
+            },
+            {
+                "question": "Did you enjoy …… trip to Canada?",
+                "option_a": "yourself",
+                "option_b": "your",
+                "option_c": "you",
+                "option_d": "youth",
+                "answer": "B"
+            },
+            {
+                "question": "They often smile when …… me.",
+                "option_a": "meeting",
+                "option_b": "meet",
+                "option_c": "to meet",
+                "option_d": "meets",
+                "answer": "A"
+            },
+            {
+                "question": "How was your ski trip? There …… no snow, so I couldn’t ski.",
+                "option_a": "are",
+                "option_b": "is",
+                "option_c": "were",
+                "option_d": "was",
+                "answer": "D"
+            },
+            {
+                "question": "I couldn’t get …… hotel room.",
+                "option_a": "an",
+                "option_b": "a",
+                "option_c": "some",
+                "option_d": "some a",
+                "answer": "B"
+            },
+            {
+                "question": "That’s too bad. You shouldn’t …… in August.",
+                "option_a": "goes",
+                "option_b": "went",
+                "option_c": "go",
+                "option_d": "to go",
+                "answer": "C"
+            },
+            {
+                "question": "When did you …… back from New York?",
+                "option_a": "get",
+                "option_b": "getting",
+                "option_c": "to get",
+                "option_d": "gets",
+                "answer": "A"
+            },
+            {
+                "question": "I learned how …… and how to windsurf last week.",
+                "option_a": "swimming",
+                "option_b": "swam",
+                "option_c": "swim",
+                "option_d": "to swim",
+                "answer": "D"
+            },
+            {
+                "question": "The food …… terrible and the hotel room wasn’t clean last month.",
+                "option_a": "are",
+                "option_b": "is",
+                "option_c": "was",
+                "option_d": "were",
+                "answer": "C"
+            },
+            {
+                "question": "Oh no. You shouldn’t …… such a hotel.",
+                "option_a": "chose",
+                "option_b": "choosing",
+                "option_c": "to choose",
+                "option_d": "choose",
+                "answer": "D"
+            },
+            {
+                "question": "The shopping was fantastic and the people\n…… great last month.\n-",
+                "option_a": "have",
+                "option_b": "were",
+                "option_c": "was",
+                "option_d": "are",
+                "answer": "B"
+            },
+            {
+                "question": "It seems …… you had a lot of fun.",
+                "option_a": "this",
+                "option_b": "that",
+                "option_c": "those",
+                "option_d": "these",
+                "answer": "B"
+            },
+            {
+                "question": "…… John have a great summer vacation last month? Yes, he did.",
+                "option_a": "did",
+                "option_b": "will",
+                "option_c": "does",
+                "option_d": "can",
+                "answer": "A"
+            },
+            {
+                "question": "It was great but it was too short. I wanted\n…… spend more time there.\n-",
+                "option_a": "for",
+                "option_b": "two",
+                "option_c": "to",
+                "option_d": "too",
+                "answer": "C"
+            },
+            {
+                "question": "You …… really fun. How do you stay on them?",
+                "option_a": "look to",
+                "option_b": "to look",
+                "option_c": "look",
+                "option_d": "looks",
+                "answer": "C"
+            },
+            {
+                "question": "In the beginning, it…… hard, so you will fall off several times. But you learn it quickly.",
+                "option_a": "were",
+                "option_b": "are",
+                "option_c": "to be",
+                "option_d": "is",
+                "answer": "D"
+            },
+            {
+                "question": "I …… wonderful time last month.",
+                "option_a": "have a",
+                "option_b": "have",
+                "option_c": "had an",
+                "option_d": "had a",
+                "answer": "D"
+            },
+            {
+                "question": "What …… doing here at present?",
+                "option_a": "you are",
+                "option_b": "are you",
+                "option_c": "you were",
+                "option_d": "was you",
+                "answer": "B"
+            },
+            {
+                "question": "I …… cooking course in India four years ago.",
+                "option_a": "took",
+                "option_b": "took an",
+                "option_c": "took a",
+                "option_d": "take",
+                "answer": "C"
+            },
+            {
+                "question": "Wonderful. So what …… you cook now? I can cook anything.",
+                "option_a": "could",
+                "option_b": "can",
+                "option_c": "cans",
+                "option_d": "can to",
+                "answer": "B"
+            },
+            {
+                "question": "Sorry. I …… cook any dishes.",
+                "option_a": "can not",
+                "option_b": "cannot",
+                "option_c": "cans no",
+                "option_d": "not can",
+                "answer": "B"
+            },
+            {
+                "question": "…… you go by car yesterday afternoon? Yes, I did.",
+                "option_a": "did",
+                "option_b": "will",
+                "option_c": "are",
+                "option_d": "can",
+                "answer": "A"
+            },
+            {
+                "question": "We spent our time swimming at the beach and\n…….. a lot of seafood.\n-",
+                "option_a": "ate",
+                "option_b": "eat",
+                "option_c": "eats",
+                "option_d": "to eat",
+                "answer": "A"
+            },
+            {
+                "question": "How long did Mary …… there?",
+                "option_a": "stays",
+                "option_b": "stay",
+                "option_c": "to stay",
+                "option_d": "staying",
+                "answer": "B"
+            },
+            {
+                "question": "When …… you last take a vacation? - July.",
+                "option_a": "can",
+                "option_b": "will",
+                "option_c": "did",
+                "option_d": "do",
+                "answer": "C"
+            },
+            {
+                "question": "Yukio took a vacation last August and she …… to Italy.",
+                "option_a": "going",
+                "option_b": "goes",
+                "option_c": "go",
+                "option_d": "went",
+                "answer": "D"
+            },
+            {
+                "question": "My name's Nam and …… want to tell you a funny story about my first trip.",
+                "option_a": "they",
+                "option_b": "I",
+                "option_c": "he",
+                "option_d": "she",
+                "answer": "B"
+            },
+            {
+                "question": "The night before last night I …… to Hanoi with my family.",
+                "option_a": "goes",
+                "option_b": "going",
+                "option_c": "went",
+                "option_d": "go",
+                "answer": "C"
+            },
+            {
+                "question": "We …… cheap flight and we stayed in a hotel in the city centre.",
+                "option_a": "taken a",
+                "option_b": "take",
+                "option_c": "took a",
+                "option_d": "took",
+                "answer": "C"
+            },
+            {
+                "question": "I …… all my clothes and my computer in a bag yesterday morning.",
+                "option_a": "packed",
+                "option_b": "packing",
+                "option_c": "packs",
+                "option_d": "pack to",
+                "answer": "A"
+            },
+            {
+                "question": "We …… our luggage at the airport last night.",
+                "option_a": "got",
+                "option_b": "getting",
+                "option_c": "gets",
+                "option_d": "get to",
+                "answer": "A"
+            },
+            {
+                "question": "When I opened my bag, it …… full of books and girls' clothes.",
+                "option_a": "was",
+                "option_b": "is",
+                "option_c": "will",
+                "option_d": "gets",
+                "answer": "A"
+            },
+            {
+                "question": "I phoned the airport but they …… know anything about my bag.",
+                "option_a": "cannot",
+                "option_b": "aren’t",
+                "option_c": "didn't",
+                "option_d": "don’t",
+                "answer": "C"
+            },
+            {
+                "question": "Therefore, I spent three …… without any clothes and computer.",
+                "option_a": "day",
+                "option_b": "days",
+                "option_c": "today",
+                "option_d": "a days",
+                "answer": "B"
+            },
+            {
+                "question": "My brother gave me some of his clothes but they…… too big and I looked terrible!",
+                "option_a": "be",
+                "option_b": "are",
+                "option_c": "was",
+                "option_d": "were",
+                "answer": "D"
+            },
+            {
+                "question": "We also …… some famous places in Hanoi such as Hoan Kiem lake, Tran Quoc Pagoda last year.",
+                "option_a": "visits",
+                "option_b": "visiting",
+                "option_c": "visited",
+                "option_d": "visit",
+                "answer": "C"
+            },
+            {
+                "question": "On the last day of my trip, my bag suddenly arrived\n…… the hotel.\n-",
+                "option_a": "about",
+                "option_b": "at",
+                "option_c": "for",
+                "option_d": "with",
+                "answer": "B"
+            },
+            {
+                "question": "What did Thanh …… with him to Hanoi?",
+                "option_a": "takes",
+                "option_b": "taking",
+                "option_c": "took",
+                "option_d": "take",
+                "answer": "D"
+            },
+            {
+                "question": "Did Long …… his computer in Hanoi?",
+                "option_a": "having",
+                "option_b": "haves",
+                "option_c": "had",
+                "option_d": "have",
+                "answer": "D"
+            },
+            {
+                "question": "How long did Duc. in Hanoi?",
+                "option_a": "stayed",
+                "option_b": "staying",
+                "option_c": "stay",
+                "option_d": "stays",
+                "answer": "C"
+            },
+            {
+                "question": "They played football …… week.",
+                "option_a": "last",
+                "option_b": "next",
+                "option_c": "the",
+                "option_d": "at",
+                "answer": "A"
+            },
+            {
+                "question": "I …… my birthday party in a restaurant last year.",
+                "option_a": "celebrating",
+                "option_b": "celebrated",
+                "option_c": "celebrate",
+                "option_d": "celebrates",
+                "answer": "B"
+            },
+            {
+                "question": "My mother cleaned the house…… weekend.",
+                "option_a": "the",
+                "option_b": "at the",
+                "option_c": "the at",
+                "option_d": "for",
+                "answer": "B"
+            },
+            {
+                "question": "Tam sent a message to his girlfriend…… yesterday morning.",
+                "option_a": "no preposition",
+                "option_b": "at",
+                "option_c": "in",
+                "option_d": "on",
+                "answer": "A"
+            },
+            {
+                "question": "They travelled to Dalat City three years ……",
+                "option_a": "agos",
+                "option_b": "ago",
+                "option_c": "time",
+                "option_d": "times",
+                "answer": "B"
+            },
+            {
+                "question": "My sister washed her clothes …… night.",
+                "option_a": "six",
+                "option_b": "next",
+                "option_c": "last",
+                "option_d": "to",
+                "answer": "C"
+            },
+            {
+                "question": "Last week, Peter and John …… to their hometown.",
+                "option_a": "returned",
+                "option_b": "returns",
+                "option_c": "to returned",
+                "option_d": "returning",
+                "answer": "A"
+            },
+            {
+                "question": "The map you when you are lost.",
+                "option_a": "to help",
+                "option_b": "helping",
+                "option_c": "help",
+                "option_d": "helps",
+                "answer": "D"
+            },
+            {
+                "question": "How are you? …… you enjoying your new school?",
+                "option_a": "was",
+                "option_b": "will",
+                "option_c": "do",
+                "option_d": "are",
+                "answer": "D"
+            },
+            {
+                "question": "Everyone here …… fine, but I am getting really angry with my brother.",
+                "option_a": "was",
+                "option_b": "is",
+                "option_c": "are",
+                "option_d": "were",
+                "answer": "B"
+            },
+            {
+                "question": "- Which of the two boys is a boy scout? - …… of them is.",
+                "option_a": "All",
+                "option_b": "None",
+                "option_c": "Neither",
+                "option_d": "Both",
+                "answer": "C"
+            },
+            {
+                "question": "Every morning I wash my face and clean my teeth by ……",
+                "option_a": "I",
+                "option_b": "mine",
+                "option_c": "my",
+                "option_d": "myself",
+                "answer": "D"
+            },
+            {
+                "question": "Nam was absent from class yesterday …… he felt sick.",
+                "option_a": "so",
+                "option_b": "because",
+                "option_c": "although",
+                "option_d": "but",
+                "answer": "B"
+            },
+            {
+                "question": "Tom has a computer, …… he doesn’t use it.",
+                "option_a": "or",
+                "option_b": "as",
+                "option_c": "because",
+                "option_d": "but",
+                "answer": "D"
+            },
+            {
+                "question": "Water is …… than tequila.",
+                "option_a": "healthier",
+                "option_b": "more healthier",
+                "option_c": "most healthy",
+                "option_d": "healthiest",
+                "answer": "A"
+            },
+            {
+                "question": "I was ill yesterday but I am …… today.",
+                "option_a": "better",
+                "option_b": "gooder",
+                "option_c": "weller",
+                "option_d": "best",
+                "answer": "A"
+            },
+            {
+                "question": "We always …… a present to Elsa on her birthday.",
+                "option_a": "are taking",
+                "option_b": "are taken",
+                "option_c": "take",
+                "option_d": "taking",
+                "answer": "C"
+            },
+            {
+                "question": "She could not eat anything at the meat restaurant\n…… she is a vegetarian.\n-",
+                "option_a": "So",
+                "option_b": "because",
+                "option_c": "because of",
+                "option_d": "although",
+                "answer": "B"
+            },
+            {
+                "question": "Order the words to make sentences\n“after, what, you, do, usually do,school ?\"\n-",
+                "option_a": "What you do after school usually do?",
+                "option_b": "What you usually do after do school?",
+                "option_c": "What do you usually do after school?",
+                "option_d": "What you do usually do after school?",
+                "answer": "C"
+            },
+            {
+                "question": "Order the words to make sentences:\non. of. birthday. September. is. second. her. the\n-",
+                "option_a": "September is her birthday on the second of",
+                "option_b": "Her birthday on is the second of September",
+                "option_c": "Her birthday is on the second of September",
+                "option_d": "September of is her birthday on the second",
+                "answer": "C"
+            },
+            {
+                "question": "I talked to …… grandmother for three hours last night.",
+                "option_a": "he",
+                "option_b": "him",
+                "option_c": "his",
+                "option_d": "himself",
+                "answer": "C"
+            },
+            {
+                "question": "…… grade are you in?",
+                "option_a": "When",
+                "option_b": "Which",
+                "option_c": "Where",
+                "option_d": "How",
+                "answer": "B"
+            },
+            {
+                "question": "Hoa lives …… Ha Noi.",
+                "option_a": "on",
+                "option_b": "at",
+                "option_c": "in",
+                "option_d": "under",
+                "answer": "C"
+            },
+            {
+                "question": "Hung …… from Hanoi but he is staying with his relatives in Ho Chi Minh City at the moment.",
+                "option_a": "will come",
+                "option_b": "came",
+                "option_c": "come",
+                "option_d": "comes",
+                "answer": "C"
+            },
+            {
+                "question": "– \"Hi, Phong. Nice to meet you again!\"- \"Hi, Kha. Nice to meet you, …… ",
+                "option_a": "too",
+                "option_b": "also",
+                "option_c": "so",
+                "option_d": "then",
+                "answer": "A"
+            },
+            {
+                "question": "…… is from your house to the post office?",
+                "option_a": "How much",
+                "option_b": "How many",
+                "option_c": "How often",
+                "option_d": "How far",
+                "answer": "D"
+            },
+            {
+                "question": "How …… rice do you want?",
+                "option_a": "much",
+                "option_b": "many",
+                "option_c": "a lot of",
+                "option_d": "lots of",
+                "answer": "A"
+            },
+            {
+                "question": "What's your …… Hoa?\" \"- It's Pham. My middle name is Thi.",
+                "option_a": "middle",
+                "option_b": "family",
+                "option_c": "full",
+                "option_d": "age",
+                "answer": "C"
+            },
+            {
+                "question": "Would you like …… a movie?",
+                "option_a": "see",
+                "option_b": "seen",
+                "option_c": "to seeing",
+                "option_d": "to see",
+                "answer": "D"
+            },
+            {
+                "question": "Hoa has lots of friends in Hue but she …… any friends in Ha Noi.",
+                "option_a": "not have",
+                "option_b": "don't have",
+                "option_c": "doesn't have",
+                "option_d": "isn't have",
+                "answer": "C"
+            },
+            {
+                "question": "Her old school is …… than her new school.",
+                "option_a": "big",
+                "option_b": "the biggest",
+                "option_c": "the bigger",
+                "option_d": "bigger",
+                "answer": "D"
+            },
+            {
+                "question": "What are you. ? -I'm playing soccer.",
+                "option_a": "Do",
+                "option_b": "to do",
+                "option_c": "doing",
+                "option_d": "does",
+                "answer": "C"
+            },
+            {
+                "question": "Peter to Linda about his vacation last week.",
+                "option_a": "talks",
+                "option_b": "talked",
+                "option_c": "talking",
+                "option_d": "to talk",
+                "answer": "B"
+            },
+            {
+                "question": "is the matter with you? – I have a toothache.",
+                "option_a": "What",
+                "option_b": "How",
+                "option_c": "When",
+                "option_d": "Why",
+                "answer": "A"
+            },
+            {
+                "question": "What does he look ? – He is fat and short.",
+                "option_a": "like",
+                "option_b": "at",
+                "option_c": "for",
+                "option_d": "after",
+                "answer": "A"
+            },
+            {
+                "question": "Lan is in my class. She is my …………..",
+                "option_a": "classroom",
+                "option_b": "classmate",
+                "option_c": "class",
+                "option_d": "neighbor",
+                "answer": "B"
+            },
+            {
+                "question": "Order the words to make sentences in . city . busy . Life . is . the . always.",
+                "option_a": "City is always busy in the life",
+                "option_b": "Life always busy in is the city",
+                "option_c": "Life is busy always in the city",
+                "option_d": "Life is always busy in the city",
+                "answer": "D"
+            },
+            {
+                "question": "Order the words to make sentences often. before. go. I. home. don't. seven",
+                "option_a": "I don’t before often go home seven",
+                "option_b": "I don’t often go home before seven",
+                "option_c": "I don’t before seven often go home",
+                "option_d": "I don’t often before go home seven",
+                "answer": "B"
+            },
+            {
+                "question": "When …… dinner?",
+                "option_a": "have you",
+                "option_b": "do you have",
+                "option_c": "you have",
+                "option_d": "you are having",
+                "answer": "B"
+            },
+            {
+                "question": "Kate is the best …… the three.",
+                "option_a": "in",
+                "option_b": "from",
+                "option_c": "than",
+                "option_d": "of",
+                "answer": "D"
+            },
+            {
+                "question": "Are you ready? - ……",
+                "option_a": "Already not",
+                "option_b": "Quite not",
+                "option_c": "Yet not",
+                "option_d": "Not yet",
+                "answer": "D"
+            },
+            {
+                "question": "Leave your dirty shoes …… the door.",
+                "option_a": "out from",
+                "option_b": "out",
+                "option_c": "outside",
+                "option_d": "out of",
+                "answer": "C"
+            },
+            {
+                "question": "He …… swim very well.",
+                "option_a": "not can",
+                "option_b": "cannot",
+                "option_c": "doesn't can",
+                "option_d": "don't can",
+                "answer": "B"
+            },
+            {
+                "question": "Peter works in London. ……",
+                "option_a": "He goes there by train.",
+                "option_b": "He there goes by train.",
+                "option_c": "He goes by train there.",
+                "option_d": "There goes he by train.",
+                "answer": "A"
+            },
+            {
+                "question": "The hotel is ……",
+                "option_a": "sell",
+                "option_b": "for sale",
+                "option_c": "for sell",
+                "option_d": "sale",
+                "answer": "B"
+            },
+            {
+                "question": "- Can we begin the test? - We can't unless the teacher …… so.",
+                "option_a": "will say",
+                "option_b": "is saying",
+                "option_c": "shall say",
+                "option_d": "says",
+                "answer": "D"
+            },
+            {
+                "question": "You are late\" he said. \"I think the bus … already.",
+                "option_a": "went",
+                "option_b": "was going",
+                "option_c": "has gone",
+                "option_d": "goes",
+                "answer": "C"
+            },
+            {
+                "question": "We wondered who was going to pay for the\n…… window.\n-",
+                "option_a": "broken",
+                "option_b": "breaking",
+                "option_c": "broke",
+                "option_d": "break",
+                "answer": "A"
+            },
+            {
+                "question": "The pond near your house is full …… white lilies.",
+                "option_a": "with",
+                "option_b": "of",
+                "option_c": "to",
+                "option_d": "no preposition",
+                "answer": "B"
+            },
+            {
+                "question": "His landlady doesn't …… of his having parties.",
+                "option_a": "appreciate",
+                "option_b": "support",
+                "option_c": "approve",
+                "option_d": "agree",
+                "answer": "C"
+            },
+            {
+                "question": "I drink …… coffee than you.",
+                "option_a": "little",
+                "option_b": "few",
+                "option_c": "less",
+                "option_d": "fewer",
+                "answer": "C"
+            },
+            {
+                "question": "The news …… as soon as possible.",
+                "option_a": "release",
+                "option_b": "will release",
+                "option_c": "will have been released",
+                "option_d": "will be released",
+                "answer": "D"
+            },
+            {
+                "question": "This book is ……",
+                "option_a": "belonged to Som",
+                "option_b": "belong to Som",
+                "option_c": "Som's",
+                "option_d": "of Som",
+                "answer": "C"
+            },
+            {
+                "question": "Suda told …… the whole story.",
+                "option_a": "to me",
+                "option_b": "me",
+                "option_c": "I",
+                "option_d": "my",
+                "answer": "B"
+            },
+            {
+                "question": "It's a small shop, and you may have some difficulty\n…… it.\n-",
+                "option_a": "to find",
+                "option_b": "of finding",
+                "option_c": "in finding",
+                "option_d": "to be finding",
+                "answer": "C"
+            },
+            {
+                "question": "Going to the movies last night …… a lot of fun.",
+                "option_a": "were",
+                "option_b": "was",
+                "option_c": "are",
+                "option_d": "being",
+                "answer": "B"
+            },
+            {
+                "question": "We …… to the baseball game when it started to rain.",
+                "option_a": "are driving",
+                "option_b": "drives",
+                "option_c": "driven",
+                "option_d": "were driving",
+                "answer": "D"
+            },
+            {
+                "question": "Exercising every day …… good for your health.",
+                "option_a": "are",
+                "option_b": "he",
+                "option_c": "were",
+                "option_d": "is",
+                "answer": "D"
+            },
+            {
+                "question": "You should wear this dress because it’s…… that one.",
+                "option_a": "elegant",
+                "option_b": "the most elegant",
+                "option_c": "more elegant than",
+                "option_d": "the elegant",
+                "answer": "C"
+            },
+            {
+                "question": "The Wagners …… to Florida two years ago.",
+                "option_a": "moved",
+                "option_b": "will move",
+                "option_c": "move",
+                "option_d": "had been moving",
+                "answer": "A"
+            },
+            {
+                "question": "Your daughter has a good voice. Her interest in singing …… encouraged.",
+                "option_a": "should be",
+                "option_b": "should",
+                "option_c": "be",
+                "option_d": "have",
+                "answer": "A"
+            },
+            {
+                "question": "I’ve been to the theater…… of times.",
+                "option_a": "most of",
+                "option_b": "much",
+                "option_c": "a little",
+                "option_d": "few",
+                "answer": "D"
+            },
+            {
+                "question": "Dick and Joan greeted ……",
+                "option_a": "himself",
+                "option_b": "herself",
+                "option_c": "themselves",
+                "option_d": "each other",
+                "answer": "D"
+            },
+            {
+                "question": "Come tomorrow and …… your books with you.",
+                "option_a": "take",
+                "option_b": "bring",
+                "option_c": "fetch",
+                "option_d": "hold",
+                "answer": "B"
+            },
+            {
+                "question": "It’s very dark here: please switch the light ……",
+                "option_a": "off",
+                "option_b": "up",
+                "option_c": "on",
+                "option_d": "in",
+                "answer": "C"
+            },
+            {
+                "question": "Is the day sunny? No, …… is dark.",
+                "option_a": "they",
+                "option_b": "its",
+                "option_c": "it’s",
+                "option_d": "it",
+                "answer": "D"
+            },
+            {
+                "question": "Betty is my friend. She is a friend of ……",
+                "option_a": "me",
+                "option_b": "my",
+                "option_c": "mine",
+                "option_d": "I",
+                "answer": "C"
+            },
+            {
+                "question": "When do you go …… bed?",
+                "option_a": "to",
+                "option_b": "to the",
+                "option_c": "in",
+                "option_d": "in the",
+                "answer": "A"
+            },
+            {
+                "question": "He is …… a jacket.",
+                "option_a": "wearing",
+                "option_b": "carrying",
+                "option_c": "having",
+                "option_d": "holding",
+                "answer": "A"
+            },
+            {
+                "question": "Smith went abroad last year. ……",
+                "option_a": "He had never been",
+                "option_b": "He had been never",
+                "option_c": "He never went",
+                "option_d": "He went never",
+                "answer": "A"
+            },
+            {
+                "question": "Would you mind …… the door?",
+                "option_a": "open",
+                "option_b": "to open",
+                "option_c": "opening",
+                "option_d": "to opening",
+                "answer": "C"
+            },
+            {
+                "question": "…… your glasses on the table?",
+                "option_a": "Is",
+                "option_b": "Are",
+                "option_c": "These",
+                "option_d": "This",
+                "answer": "B"
+            },
+            {
+                "question": "– A: …… you? – B: Yes, please get my luggage from the car.",
+                "option_a": "Do I help",
+                "option_b": "Have I help",
+                "option_c": "Can I help",
+                "option_d": "Am I helping",
+                "answer": "C"
+            },
+            {
+                "question": "…… form of transport is as popular as the private car.",
+                "option_a": "No other",
+                "option_b": "No others",
+                "option_c": "None other",
+                "option_d": "Nothing other",
+                "answer": "A"
+            },
+            {
+                "question": "We haven’t heard …… the result was.",
+                "option_a": "what",
+                "option_b": "which",
+                "option_c": "that",
+                "option_d": "when",
+                "answer": "A"
+            },
+            {
+                "question": "They gave …… looking for her when it grew dark.",
+                "option_a": "up",
+                "option_b": "in",
+                "option_c": "off",
+                "option_d": "out",
+                "answer": "A"
+            },
+            {
+                "question": "This year the farmers were just able to gather in the\n…… before the fine weather came to an end.\n-",
+                "option_a": "collection",
+                "option_b": "seed",
+                "option_c": "plant",
+                "option_d": "harvest",
+                "answer": "D"
+            },
+            {
+                "question": "…… you angry with him?",
+                "option_a": "Do",
+                "option_b": "Why",
+                "option_c": "Are",
+                "option_d": "Have",
+                "answer": "C"
+            },
+            {
+                "question": "Your mother and I are looking forward …… you.",
+                "option_a": "of seeing",
+                "option_b": "for seeing",
+                "option_c": "to see",
+                "option_d": "to seeing",
+                "answer": "D"
+            },
+            {
+                "question": "Would you mind …… the window?",
+                "option_a": "open",
+                "option_b": "to open",
+                "option_c": "opening",
+                "option_d": "not to open",
+                "answer": "C"
+            },
+            {
+                "question": "My cousin …… bank manager.",
+                "option_a": "is a",
+                "option_b": "makes",
+                "option_c": "is",
+                "option_d": "he is",
+                "answer": "A"
+            },
+            {
+                "question": "She smokes ……",
+                "option_a": "very heavily",
+                "option_b": "much",
+                "option_c": "very heavy",
+                "option_d": "lot",
+                "answer": "A"
+            },
+            {
+                "question": "She's talking to you. Please listen to ……",
+                "option_a": "she",
+                "option_b": "hers",
+                "option_c": "her",
+                "option_d": "him",
+                "answer": "C"
+            },
+            {
+                "question": "This isn't Bob's car. …… is a sports car.",
+                "option_a": "He",
+                "option_b": "His",
+                "option_c": "He's",
+                "option_d": "My",
+                "answer": "B"
+            },
+            {
+                "question": "Jack and Tom …… go to school yesterday.",
+                "option_a": "doesn't",
+                "option_b": "don't",
+                "option_c": "didn't",
+                "option_d": "aren't",
+                "answer": "C"
+            },
+            {
+                "question": "Jack always …… to his office by car.",
+                "option_a": "is going",
+                "option_b": "goes",
+                "option_c": "go",
+                "option_d": "has gone",
+                "answer": "B"
+            },
+            {
+                "question": "…… tall are you?",
+                "option_a": "Which",
+                "option_b": "What",
+                "option_c": "When",
+                "option_d": "How",
+                "answer": "D"
+            },
+            {
+                "question": "I speak French …… Jenny.",
+                "option_a": "more well that",
+                "option_b": "better than",
+                "option_c": "more good than",
+                "option_d": "better as",
+                "answer": "B"
+            },
+            {
+                "question": "The boy suffered …… a very bad headache.",
+                "option_a": "of",
+                "option_b": "from",
+                "option_c": "by",
+                "option_d": "at",
+                "answer": "B"
+            },
+            {
+                "question": "Always …… honest in whatever you do.",
+                "option_a": "to be",
+                "option_b": "be",
+                "option_c": "are",
+                "option_d": "is",
+                "answer": "B"
+            },
+            {
+                "question": "Did you …… your pocketbook?",
+                "option_a": "lose",
+                "option_b": "loosen",
+                "option_c": "loose",
+                "option_d": "miss",
+                "answer": "A"
+            },
+            {
+                "question": "I prefer …… soccer to watching TV.",
+                "option_a": "played",
+                "option_b": "has played",
+                "option_c": "playing",
+                "option_d": "play",
+                "answer": "C"
+            },
+            {
+                "question": "I send …… a letter every month.",
+                "option_a": "her",
+                "option_b": "she",
+                "option_c": "herself",
+                "option_d": "hers",
+                "answer": "A"
+            },
+            {
+                "question": "George cooks fish for …… every day.",
+                "option_a": "they",
+                "option_b": "them",
+                "option_c": "their",
+                "option_d": "theirs",
+                "answer": "B"
+            },
+            {
+                "question": "Don't forget to check the electricity and gas\n…… you leave for your cruise holiday.\n-",
+                "option_a": "after",
+                "option_b": "although",
+                "option_c": "unless",
+                "option_d": "before",
+                "answer": "D"
+            },
+            {
+                "question": "This examination is …… than the other examination.",
+                "option_a": "easier",
+                "option_b": "difficult",
+                "option_c": "more difficult",
+                "option_d": "more easier",
+                "answer": "C"
+            },
+            {
+                "question": "It was …… last night that I couldn't sleep.",
+                "option_a": "such a hot",
+                "option_b": "so a hot",
+                "option_c": "such hot",
+                "option_d": "so hot",
+                "answer": "D"
+            },
+            {
+                "question": "The party will …… in the living room of his company.",
+                "option_a": "held be",
+                "option_b": "is held",
+                "option_c": "being hold",
+                "option_d": "be held",
+                "answer": "D"
+            },
+            {
+                "question": "He ***draws*** pictures for books",
+                "option_a": "make pictures with a pencil",
+                "option_b": "make jobs with a pencil",
+                "option_c": "make pictures with his hands",
+                "option_d": "make pictures with his head",
+                "answer": "A"
+            },
+            {
+                "question": "She has a room ***just*** for my work",
+                "option_a": "to do",
+                "option_b": "only",
+                "option_c": "become",
+                "option_d": "Need",
+                "answer": "B"
+            }
+        ];
+
+        const container = document.getElementById('quiz-container');
+
+        quizData.forEach((q, index) => {
+            const block = document.createElement('div');
+            block.className = 'question-block';
+            block.innerHTML = `<div class="question-text">Q${index + 1}: ${q.question}</div>`;
+
+            const buttons = {};
+
+            ['A', 'B', 'C', 'D'].forEach(letter => {
+                const btn = document.createElement('button');
+                btn.textContent = `${letter}. ${q[`option_${letter.toLowerCase()}`]}`;
+                btn.className = 'option-btn';
+                btn.onclick = () => {
+                    Object.entries(buttons).forEach(([k, b]) => {
+                        b.disabled = true;
+                        b.classList.remove('correct', 'incorrect');
+                        if (k === q.answer) {
+                            b.classList.add('correct');
+                        } else if (k === letter) {
+                            b.classList.add('incorrect');
+                        }
+                    });
+                };
+                buttons[letter] = btn;
+                block.appendChild(btn);
+            });
+
+            const resetBtn = document.createElement('button');
+            // resetBtn.textContent = "Chọn lại";
+            // resetBtn.className = 'reset-btn';
+            // resetBtn.onclick = () => {
+            //     Object.values(buttons).forEach(b => {
+            //         b.disabled = false;
+            //         b.classList.remove('correct', 'incorrect');
+            //     });
+            // };
+
+            // block.appendChild(resetBtn);
+            container.appendChild(block);
+        });
+    </script>
+</body>
+
+</html>
