@@ -230,12 +230,12 @@
       document.getElementById('quiz-screen').style.display = 'none';
       resultContainer.innerHTML = `<h3>You have correctly answered ${score} / ${quizData.length} questions.</h3>`;
 
-      // Lưu kết quả cuối cùng
+      // Save final result
       const prev = JSON.parse(localStorage.getItem('quizResults') || '[]');
       prev.push({ name: username, score, date: new Date().toISOString() });
       localStorage.setItem('quizResults', JSON.stringify(prev));
 
-      // Xoá trạng thái làm dở
+      // Remove unfinished state
       localStorage.removeItem('quizUserData_' + username);
     }
   </script>
@@ -363,7 +363,7 @@
       document.getElementById('quiz-screen').style.display = 'block';
       renderPage();
     } else {
-      // bắt đầu mới
+      // start new
       username = 'default_user';
       document.getElementById('quiz-screen').style.display = 'block';
       renderPage();
